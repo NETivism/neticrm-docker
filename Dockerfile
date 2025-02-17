@@ -91,8 +91,8 @@ RUN \
   sed -i 's/^;pm\.max_requests = .*/pm.max_requests = 50/g' /etc/php/8.3/fpm/pool.d/www.conf && \
   sed -i 's/^;request_terminate_timeout = .*/request_terminate_timeout = 7200/g' /etc/php/8.3/fpm/pool.d/www.conf
 
-COPY container/rsyslogd/rsyslog.conf /etc/rsyslog.conf
-COPY container/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY image/rsyslogd/rsyslog.conf /etc/rsyslog.conf
+COPY image/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN \
   mkdir -p /run/php && chmod 777 /run/php
 
@@ -107,8 +107,8 @@ RUN \
   apt-get update
 
 ### drupal download
-COPY container/drupal-download.sh /tmp
-COPY container/drupalmodule-download.sh /tmp
+COPY image/drupal-download.sh /tmp
+COPY image/drupalmodule-download.sh /tmp
 RUN \
   chmod +x /tmp/drupal-download.sh && \
   chmod +x /tmp/drupalmodule-download.sh
@@ -122,8 +122,11 @@ RUN \
 
 ### Add drupal 10 related drush
 RUN \
-  cd /var/www/html && composer update && composer require drush/drush
+  cd /var/www/html && \
+  composer update && \
+  composer update "drupal/core-*" --with-all-dependencies && \
+  composer require drush/drush --with-all-dependencies
 
-COPY container/start.sh /start.sh
+COPY image/start.sh /start.sh
 RUN chmod +x /start.sh
 ENTRYPOINT ["/start.sh"]
