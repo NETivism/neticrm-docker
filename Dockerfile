@@ -91,8 +91,8 @@ RUN \
   sed -i 's/^;pm\.max_requests = .*/pm.max_requests = 50/g' /etc/php/8.3/fpm/pool.d/www.conf && \
   sed -i 's/^;request_terminate_timeout = .*/request_terminate_timeout = 7200/g' /etc/php/8.3/fpm/pool.d/www.conf
 
-COPY image/rsyslogd/rsyslog.conf /etc/rsyslog.conf
-COPY image/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY build/rsyslogd/rsyslog.conf /etc/rsyslog.conf
+COPY build/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN \
   mkdir -p /run/php && chmod 777 /run/php
 
@@ -107,8 +107,8 @@ RUN \
   apt-get update
 
 ### drupal download
-COPY image/drupal-download.sh /tmp
-COPY image/drupalmodule-download.sh /tmp
+COPY build/drupal-download.sh /tmp
+COPY build/drupalmodule-download.sh /tmp
 RUN \
   chmod +x /tmp/drupal-download.sh && \
   chmod +x /tmp/drupalmodule-download.sh
@@ -137,6 +137,6 @@ RUN \
   cd /mnt/neticrm-10/civicrm/neticrm/ && git checkout 10.x-master && \
   cd /mnt/neticrm-10/civicrm/drupal/ && git checkout 10.x-master
 
-COPY image/start.sh /start.sh
+COPY build/start.sh /start.sh
 RUN chmod +x /start.sh
 ENTRYPOINT ["/start.sh"]
