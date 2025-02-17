@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Check if /var/www/html is empty
-if [ -z "$(ls -A /var/www/html)" ]; then
-    echo "Directory /var/www/html is empty, copying Drupal files..."
+# Check if /var/www/html/sites/default/settings.php exists
+if [ ! -f /var/www/html/LICENSE.txt ]; then
+    echo "LICENSE.txt not found, copying Drupal files..."
     # Find the drupal directory under /tmp
     DRUPAL_DIR=$(find /tmp -maxdepth 1 -type d -name "drupal-*" | sort -V | tail -n 1)
     if [ -n "$DRUPAL_DIR" ]; then
