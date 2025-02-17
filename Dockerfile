@@ -34,7 +34,7 @@ RUN \
     wget -qO /etc/apt/trusted.gpg.d/sury-php.gpg https://packages.sury.org/php/apt.gpg && \
     apt-get update
 
-# wkhtmltopdf (保留，因為可能 PHP 需要使用)
+# wkhtmltopdf
 WORKDIR /tmp
 ENV DEBIAN_FRONTEND=noninteractive
 RUN \
@@ -83,7 +83,7 @@ RUN \
   ln -s /etc/php/8.3/docker_setup.ini /etc/php/8.3/fpm/conf.d/ && \
   cp -f /home/docker/php/default83_cli.ini /etc/php/8.3/cli/conf.d/ && \
   cp -f /home/docker/php/default_opcache_blacklist /etc/php/8.3/opcache_blacklist && \
-  sed -i 's/^listen = .*/listen = 80/g' /etc/php/8.3/fpm/pool.d/www.conf && \
+  sed -i 's/^listen = .*/listen = 8001/g' /etc/php/8.3/fpm/pool.d/www.conf && \
   sed -i 's/^pm = .*/pm = ondemand/g' /etc/php/8.3/fpm/pool.d/www.conf && \
   sed -i 's/;daemonize = .*/daemonize = no/g' /etc/php/8.3/fpm/php-fpm.conf && \
   sed -i 's/^pm\.max_children = .*/pm.max_children = 8/g' /etc/php/8.3/fpm/pool.d/www.conf && \
