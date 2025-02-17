@@ -12,9 +12,4 @@ if [ -d /tmp/drupal-${LATEST_VERSION} ]; then
 fi
 echo "Downloading Drupal $LATEST_VERSION ..."
 curl -s "https://ftp.drupal.org/files/projects/drupal-${LATEST_VERSION}.tar.gz" | tar -xz -C /tmp
-if [ ! -d /var/www/html ]; then
-  mkdir -p /var/www/html
-fi
-mv /tmp/drupal-$LATEST_VERSION/* /tmp/drupal-$LATEST_VERSION/.[!.]* /var/www/html/
-rm -Rf /tmp/drupal-$LATEST_VERSION
-echo "Drupal $LATEST_VERSION downloaded on /var/www/html"
+echo "Drupal $LATEST_VERSION downloaded to /tmp/drupal-${LATEST_VERSION}"

@@ -122,7 +122,7 @@ RUN \
 
 ### Add drupal 10 related drush
 RUN \
-  cd /var/www/html && \
+  cd /tmp/drupal-* && \
   composer update && \
   composer update "drupal/core-*" --with-all-dependencies && \
   composer require drush/drush --with-all-dependencies
