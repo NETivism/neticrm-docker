@@ -127,6 +127,16 @@ RUN \
   composer update "drupal/core-*" --with-all-dependencies && \
   composer require drush/drush --with-all-dependencies
 
+### Download CiviCRM
+RUN \
+  echo "download netiCRM ..." && \
+  mkdir -p /mnt/neticrm-10 && \
+  cd /mnt/neticrm-10 && \
+  git clone https://github.com/NETivism/netiCRM.git civicrm && cd civicrm && \
+  git submodule init && git submodule update && \
+  cd /mnt/neticrm-10/civicrm/neticrm/ && git checkout 10.x-master && \
+  cd /mnt/neticrm-10/civicrm/drupal/ && git checkout 10.x-master
+
 COPY image/start.sh /start.sh
 RUN chmod +x /start.sh
 ENTRYPOINT ["/start.sh"]
