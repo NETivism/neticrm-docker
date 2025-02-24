@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check if /var/www/html/sites/default/settings.php exists
+# Check if /var/www/html/LICENSE.txt exists
 if [ ! -f /var/www/html/LICENSE.txt ]; then
     echo "LICENSE.txt not found, copying Drupal files..."
     # Find the drupal directory under /tmp
